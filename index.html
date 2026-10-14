@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#f8d96b"><meta name="description" content="A little space for your big ideas. Simple, sunny notes with automatic saving and effortless formatting.">
   <title>Butter — a little space to think</title>
   <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
-  <script src="app.js" defer></script>
+  <script src="theme.js"></script><script src="app.js" defer></script>
 </head>
 <body>
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -32,7 +32,7 @@
     <div class="sidebar-bottom"><span class="local-dot"></span><div>Just yours. Always close.<small>Notes are saved in this browser.</small></div></div>
   </aside>
   <main class="workspace">
-    <header class="topbar"><div class="breadcrumb"><button class="icon-button mobile-menu" id="menu" aria-label="Open notes sidebar"><svg><use href="#i-menu"/></svg></button><span>My notebook</span><span class="slash">/</span><span id="breadcrumb-title">A fresh page</span></div><div class="top-actions"><span class="save-status" id="save-status" role="status"><span class="status-dot"></span>Saved to this browser</span><button class="icon-button" id="focus" aria-label="Toggle focus mode" title="Focus mode" aria-pressed="false"><svg><use href="#i-focus"/></svg></button></div></header>
+    <header class="topbar"><div class="breadcrumb"><button class="icon-button mobile-menu" id="menu" aria-label="Open notes sidebar"><svg><use href="#i-menu"/></svg></button><span>My notebook</span><span class="slash">/</span><span id="breadcrumb-title">A fresh page</span></div><div class="top-actions"><span class="save-status" id="save-status" role="status"><span class="status-dot"></span>Saved to this browser</span><button class="icon-button" id="theme-toggle" aria-label="Dark mode" title="Switch to dark mode" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></svg></button><button class="icon-button" id="focus" aria-label="Toggle focus mode" title="Focus mode" aria-pressed="false"><svg><use href="#i-focus"/></svg></button></div></header>
     <div class="desk">
       <div class="page-heading"><div><div class="eyebrow">LESS NOISE. MORE IDEAS.</div><h1>Make room for a thought.</h1></div><span class="little-sun" aria-hidden="true">☀</span></div>
       <section class="notepad" aria-label="Note page">
