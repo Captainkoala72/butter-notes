@@ -8,7 +8,7 @@
   let notes = [], activeId, saveTimer, toastTimer, selection, deletedNote, dirty = false;
   let storageHealthy = true;
   const newId = () => crypto.randomUUID();
-  const plain = (html) => { const doc = new DOMParser().parseFromString(html, 'text/html'); return doc.body.textContent || ''; };
+  const plain = (html) => { const doc = new DOMParser().parseFromString(html, 'text/html'); doc.querySelectorAll('div,p,li,br').forEach(el => el.append(' ')); return (doc.body.textContent || '').replace(/\s+/g,' ').trim(); };
   const words = (text) => text.trim() ? text.trim().split(/\s+/u).length : 0;
   const label = (note) => note.title.trim() || 'Untitled note';
   const current = () => notes.find(note => note.id === activeId);
@@ -107,7 +107,8 @@
   function createNote() {
     if (!flush()) { toast('Download your current note first — browser storage is unavailable.'); return; }
     const now = Date.now(); const note = {id:newId(),title:'',html:'',created:now,updated:now};
-    notes.unshift(note); persist(note); $('#search').value = ''; openNote(note.id); title.focus();
+    if (!persist(note)) { dirty = false; toast('Could not create a saved page. Download your notes to free up browser storage.'); return; }
+    notes.unshift(note); $('#search').value = ''; openNote(note.id); title.focus();
   }
   function rememberSelection() {
     const selected = window.getSelection();
