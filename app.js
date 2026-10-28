@@ -68,12 +68,12 @@
     element.append(dot, document.createTextNode(message)); element.classList.toggle('error', error);
   }
   function persist(note) {
-    try { localStorage.setItem(prefix + note.id, JSON.stringify(note)); storageHealthy = true; dirty = false; status('Saved to this browser'); return true; }
+    try { const serialized = JSON.stringify(note); if (localStorage.getItem(prefix + note.id) !== serialized) localStorage.setItem(prefix + note.id, serialized); storageHealthy = true; dirty = false; status('Saved to this browser'); return true; }
     catch { storageHealthy = false; dirty = true; status('Not saved — download a copy', true); return false; }
   }
-  function capture() { const note = current(); if (!note) return; note.title = title.value; note.html = editor.innerHTML; note.updated = Date.now(); }
+  function capture() { const note = current(); if (!note) return false; const html = editor.innerHTML; if (note.title === title.value && note.html === html) return false; note.title = title.value; note.html = html; note.updated = Date.now(); dirty = true; return true; }
   function flush() { clearTimeout(saveTimer); if (dirty) { capture(); return persist(current()); } return storageHealthy; }
-  function saveActiveChoice() { try { localStorage.setItem(activeKey, activeId); } catch { /* Note persistence reports errors independently. */ } }
+  function saveActiveChoice() { try { if (localStorage.getItem(activeKey) !== activeId) localStorage.setItem(activeKey, activeId); } catch { /* Note persistence reports errors independently. */ } }
   function renderList() {
     const list = $('#notes-list'); list.replaceChildren();
     const query = $('#search').value.toLowerCase().trim();
@@ -107,7 +107,8 @@
     status(storageHealthy ? 'Saved to this browser' : 'Not saved — download a copy', !storageHealthy);
   }
   function changed() {
-    dirty = true; capture(); status('Unsaved changes…'); updateMeta();
+    if (!capture()) return;
+    status('Unsaved changes…'); updateMeta();
     clearTimeout(saveTimer); saveTimer = setTimeout(() => { persist(current()); renderList(); }, 5000);
     const deadline = Date.now() + 5000;
     const indicator = $('#autosave-indicator');
@@ -117,7 +118,7 @@
       const message = seconds ? 'Autosaving in ' + seconds + 's' : 'Saving…';
       if (indicator.textContent !== message) indicator.textContent = message;
     }
-    tick(); countdownTimer = setInterval(tick, 200);
+    tick(); countdownTimer = setInterval(tick, 1000);
   }
   function createNote() {
     if (!flush()) { toast('Download your current note first — browser storage is unavailable.'); return; }
@@ -161,7 +162,7 @@
   document.querySelectorAll('[data-color]').forEach(button => { button.addEventListener('mousedown',event => event.preventDefault()); button.addEventListener('click',() => command('foreColor',button.dataset.color)); });
   $('#font-size').addEventListener('change',event => command('fontSize',event.target.value));
   $('#search').addEventListener('input',renderList);
-  $('#save-note').addEventListener('click',() => { capture(); dirty = true; const saved = flush(); renderList(); toast(saved ? 'All tucked away. Your note is saved.' : 'Storage is full or unavailable. Download a copy to keep your note.'); });
+  $('#save-note').addEventListener('click',() => { capture(); const saved = flush(); renderList(); toast(saved ? 'All tucked away. Your note is saved.' : 'Storage is full or unavailable. Download a copy to keep your note.'); });
   $('#focus').addEventListener('click',() => { const on = document.body.classList.toggle('focus-mode'); $('#focus').setAttribute('aria-pressed',String(on)); closeSidebar(); });
   $('#menu').addEventListener('click',() => { document.body.classList.add('sidebar-open'); $('#scrim').hidden = false; });
   $('#scrim').addEventListener('click',closeSidebar);
