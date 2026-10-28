@@ -51,4 +51,10 @@
 [data-theme="dark"] .save-status.error{color:#f29488}
 [data-theme="dark"] :focus-visible{outline-color:#e8ca79}
 @media(max-width:570px){[data-theme="dark"] .paper{background:linear-gradient(to right,transparent 25px,#a06c5055 25px,#a06c5055 26px,transparent 26px)}.top-actions{gap:4px}.top-actions .icon-button{padding:6px}.save-status{max-width:100px;white-space:normal}}
+.notepad-controls{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin:0 0 14px}
+.zoom-level{border:0;background:transparent;color:var(--ink);font-size:11px;padding:8px 5px;border-radius:5px;min-width:44px;font-variant-numeric:tabular-nums}
+.zoom-level:hover{background:#a8986220}
+.notepad-viewport{overflow:auto;padding:5px 5px 12px;margin:0 -5px;scrollbar-width:thin}
+.notepad{zoom:var(--notepad-zoom,1);width:100%}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

@@ -6,7 +6,8 @@ A small, sunny notebook for quick thoughts. Built with plain HTML, CSS, and Java
 
 - Separate pages with titles and instant search
 - Bold, italic, underline, four font sizes, five ink colors, and bullet lists
-- Automatic saving, a manual save button, and word count
+- Autosave five seconds after the last edit, a manual save button, and word count. Each edit restarts the timer; switching pages or leaving the app saves immediately.
+- Notepad zoom controls (80–160%) with a remembered preference and one-click reset
 - Download formatted notes as standalone HTML files
 - Delete confirmation and a 12-second undo window
 - Focus mode, mobile layout, keyboard shortcuts, and reduced-motion support

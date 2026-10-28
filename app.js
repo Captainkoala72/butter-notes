@@ -101,8 +101,8 @@
     status(storageHealthy ? 'Saved to this browser' : 'Not saved — download a copy', !storageHealthy);
   }
   function changed() {
-    dirty = true; capture(); status('Saving…'); updateMeta();
-    clearTimeout(saveTimer); saveTimer = setTimeout(() => { persist(current()); renderList(); }, 250);
+    dirty = true; capture(); status('Unsaved changes…'); updateMeta();
+    clearTimeout(saveTimer); saveTimer = setTimeout(() => { persist(current()); renderList(); }, 5000);
   }
   function createNote() {
     if (!flush()) { toast('Download your current note first — browser storage is unavailable.'); return; }
