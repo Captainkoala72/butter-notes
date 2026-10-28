@@ -7,6 +7,7 @@
   const activeKey = 'butter.active.v1';
   let notes = [], activeId, saveTimer, toastTimer, selection, deletedNote, dirty = false;
   let storageHealthy = true;
+  let countdownTimer;
   const newId = () => crypto.randomUUID();
   const plain = (html) => { const doc = new DOMParser().parseFromString(html, 'text/html'); doc.querySelectorAll('div,p,li,br').forEach(el => el.append(' ')); return (doc.body.textContent || '').replace(/\s+/g,' ').trim(); };
   const words = (text) => text.trim() ? text.trim().split(/\s+/u).length : 0;
@@ -57,6 +58,11 @@
     if (!current()) activeId = notes[0].id;
   }
   function status(message, error = false) {
+    clearInterval(countdownTimer);
+    const indicator = $('#autosave-indicator');
+    indicator.textContent = message;
+    indicator.classList.toggle('error', error);
+    indicator.classList.remove('pending');
     const element = $('#save-status'); element.replaceChildren();
     const dot = document.createElement('span'); dot.className = 'status-dot';
     element.append(dot, document.createTextNode(message)); element.classList.toggle('error', error);
@@ -103,6 +109,15 @@
   function changed() {
     dirty = true; capture(); status('Unsaved changes…'); updateMeta();
     clearTimeout(saveTimer); saveTimer = setTimeout(() => { persist(current()); renderList(); }, 5000);
+    const deadline = Date.now() + 5000;
+    const indicator = $('#autosave-indicator');
+    indicator.classList.add('pending');
+    function tick() {
+      const seconds = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      const message = seconds ? 'Autosaving in ' + seconds + 's' : 'Saving…';
+      if (indicator.textContent !== message) indicator.textContent = message;
+    }
+    tick(); countdownTimer = setInterval(tick, 200);
   }
   function createNote() {
     if (!flush()) { toast('Download your current note first — browser storage is unavailable.'); return; }

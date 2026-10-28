@@ -54,6 +54,12 @@
 .notepad-controls{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin:0 0 14px}
 .zoom-level{border:0;background:transparent;color:var(--ink);font-size:11px;padding:8px 5px;border-radius:5px;min-width:44px;font-variant-numeric:tabular-nums}
 .zoom-level:hover{background:#a8986220}
+.autosave-indicator{margin-right:auto;font-size:11px;line-height:1.5;color:#627655;font-variant-numeric:tabular-nums}
+.autosave-indicator:before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:8px;vertical-align:middle}
+.autosave-indicator.pending{color:#8c6c22}.autosave-indicator.error{color:#a33e30}
+[data-theme="dark"] .autosave-indicator{color:#a7c298}
+[data-theme="dark"] .autosave-indicator.pending{color:#e6c778}
+[data-theme="dark"] .autosave-indicator.error{color:#f29488}
 .notepad-viewport{overflow:auto;padding:5px 5px 12px;margin:0 -5px;scrollbar-width:thin}
 .notepad{zoom:var(--notepad-zoom,1);width:100%}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
